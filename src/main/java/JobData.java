@@ -73,11 +73,24 @@ public class JobData {
 
         for (HashMap<String, String> row : allJobs) {
 
-            String aValue = row.get(column);
+            String aValue = row.get(column).toLowerCase();
 
-            if (aValue.contains(value)) {
+//            char[] chars = value.toLowerCase().toCharArray();
+//            boolean found = false;
+//            for (int i = 0; i < chars.length; i++) {
+//                if (!found && Character.isLetter(chars[i])) {
+//                    chars[i] = Character.toUpperCase(chars[i]);
+//                    found = true;
+//                } else if (Character.isWhitespace(chars[i]) || chars[i]=='.' || chars[i]=='\'') { // You can add other chars here
+//                    found = false;
+//                }
+//            }
+//            value = String.valueOf(chars);
+
+            if (aValue.contains(value.toLowerCase())) {
                 jobs.add(row);
             }
+
         }
 
         return jobs;
@@ -94,8 +107,21 @@ public class JobData {
         // load data, if not already loaded
         loadData();
 
-        // TODO - implement this method
-        return null;
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+        ArrayList<String> columns = new ArrayList<>();
+        columns.add("core competency");
+        columns.add("position type");
+        columns.add("location");
+        columns.add("employer");
+        columns.add("name");
+
+
+        for (String column : columns){
+            jobs.addAll(findByColumnAndValue(column, value));
+        }
+
+
+        return jobs;
     }
 
     /**
